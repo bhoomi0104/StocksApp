@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.stocksapp.model.Stock
 import kotlin.random.Random
@@ -99,16 +98,16 @@ fun AddStockScreen(onStockAdded: (Stock) -> Unit) {
 
                 // Check if conversion was successful
                 if (floatValue != null && changeValue != null) {
-                    // Create a Stock object with a generated ID
+                    // Create a Stock object with a random ID
                     val newStock = Stock(
-                        id = Random.nextInt(), // You can generate a unique ID as needed
+                        id = Random.nextInt(),
                         name = shortName,
                         fullName = fullName,
                         value = floatValue,
                         change = changeValue
                     )
 
-                    // Pass the new Stock object to the callback function
+                    // Pass the new stock object
                     onStockAdded(newStock)
 
                     // Clear input fields
@@ -129,8 +128,3 @@ fun AddStockScreen(onStockAdded: (Stock) -> Unit) {
 
 }
 
-@Preview
-@Composable
-fun PreviewCom() {
-    AddStockScreen(onStockAdded = {})
-}

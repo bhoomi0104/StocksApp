@@ -33,8 +33,6 @@ import com.example.stocksapp.R
 import com.example.stocksapp.model.News
 import com.example.stocksapp.ui.theme.CardBackgroundDark
 import com.example.stocksapp.ui.theme.CardBackgroundLight
-import com.example.stocksapp.ui.theme.SheetBackgroundDark
-import com.example.stocksapp.ui.theme.SheetBackgroundLight
 
 
 @Composable
@@ -63,7 +61,7 @@ fun ItemNews(news: News) {
 
                     Column {
                         Text(text = news.newsPaper, fontWeight = FontWeight.Bold, maxLines = 1)
-                        Text(text = news.title, fontWeight = FontWeight.SemiBold, maxLines = 3)
+                        Text(text = news.title, fontWeight = FontWeight.Normal, maxLines = 3)
                     }
                 }
                 Spacer(modifier = Modifier.width(8.dp))
@@ -81,7 +79,7 @@ fun ItemNews(news: News) {
             Divider(
                 thickness = 0.5.dp,
                 color = Color.Gray,
-                modifier = Modifier.padding(vertical = 4.dp)
+                modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Row(
@@ -107,18 +105,3 @@ fun ItemNews(news: News) {
 
 }
 
-
-//@Preview(showBackground = true)
-@Composable
-fun PreviewItemStock() {
-    ItemNews(
-        News(
-            "Dane Jones",
-            "Dane Jones Industrial Average Dane Jones Industrial Average Dane Jones Industrial Average",
-            R.drawable.test,
-            "3 days ago",
-            "author"
-        )
-    )
-
-}
