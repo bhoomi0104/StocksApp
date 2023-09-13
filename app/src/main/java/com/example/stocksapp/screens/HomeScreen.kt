@@ -1,7 +1,7 @@
 package com.example.stocksapp.screens
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,28 +16,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.DismissValue
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberDismissState
@@ -46,24 +37,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.stocksapp.R
 import com.example.stocksapp.model.Stock
-import com.example.stocksapp.ui.theme.blue
+import com.example.stocksapp.ui.theme.Blue
 import com.example.stocksapp.model.News
-import com.example.stocksapp.ui.theme.SheetBackground
-import com.example.stocksapp.ui.theme.newsBackground
-import kotlin.random.Random
+import com.example.stocksapp.ui.theme.CardBackgroundDark
+import com.example.stocksapp.ui.theme.CardBackgroundLight
+import com.example.stocksapp.ui.theme.SheetBackgroundDark
+import com.example.stocksapp.ui.theme.SheetBackgroundLight
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,16 +110,20 @@ fun HomeScreen() {
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
-        sheetContainerColor = SheetBackground,
+        sheetContainerColor = if (!isSystemInDarkTheme())
+            SheetBackgroundLight
+        else
+            SheetBackgroundDark,
         sheetContent = {
             BottomSheetContent(newsList)
 
         },
         sheetPeekHeight = 100.dp, //initial sheet height
         modifier = Modifier
-            .padding(vertical = 8.dp, horizontal = 16.dp)
+            .padding(vertical = 8.dp)
             .fillMaxWidth()
     ) {
+
 
         Scaffold(topBar = {
             TopAppBar(title = {
@@ -136,8 +131,7 @@ fun HomeScreen() {
                     Text(text = "Stocks", style = MaterialTheme.typography.titleLarge)
                     Text(
                         text = "September 12",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.DarkGray
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
             }, actions =
@@ -150,8 +144,12 @@ fun HomeScreen() {
                             imageVector = Icons.Filled.Add,
                             contentDescription = "Add",
                             Modifier
-                                .background(color = newsBackground, shape = CircleShape)
-                                .padding(8.dp)
+                                .background(
+                                    color = if (!isSystemInDarkTheme()) SheetBackgroundLight else SheetBackgroundDark,
+                                    shape = CircleShape
+                                )
+                                .padding(8.dp),
+                            tint = if (!isSystemInDarkTheme()) Color.Black else Color.White
                         )
                     }
                 }
@@ -168,20 +166,20 @@ fun HomeScreen() {
                 Spacer(modifier = Modifier.height(4.dp))
 
                 if (isPlusLayoutVisible)
-                    AddStockScreen(onStockAdded = {stock->
+                    AddStockScreen(onStockAdded = { stock ->
                         stockList.add(stock)
-                        isPlusLayoutVisible=!isPlusLayoutVisible
+                        isPlusLayoutVisible = !isPlusLayoutVisible
                     })
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "My Symbols", color = blue, fontWeight = FontWeight.Bold)
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 16.dp)) {
+                    Text(text = "My Symbols", color = Blue, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
                         painter = painterResource(id = R.drawable.ic_up_down),
                         contentDescription = "Up Down",
-                        tint = blue
+                        tint = Blue
 
                     )
 
@@ -212,6 +210,7 @@ fun HomeScreen() {
                             },
                             dismissContent = {
                                 ItemStock(stock = item)
+
                             },
                             directions = setOf(
                                 DismissDirection.StartToEnd,
@@ -245,5 +244,11 @@ fun BottomSheetContent(newsList: List<News>) {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun XYZPreview() {
+    HomeScreen()
 }
 

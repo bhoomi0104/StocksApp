@@ -1,6 +1,7 @@
 package com.example.stocksapp.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,12 +27,15 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.stocksapp.R
 import com.example.stocksapp.model.News
-import com.example.stocksapp.ui.theme.newsBackground
+import com.example.stocksapp.ui.theme.CardBackgroundDark
+import com.example.stocksapp.ui.theme.CardBackgroundLight
+import com.example.stocksapp.ui.theme.SheetBackgroundDark
+import com.example.stocksapp.ui.theme.SheetBackgroundLight
+
 
 @Composable
 fun ItemNews(news: News) {
@@ -39,7 +43,9 @@ fun ItemNews(news: News) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = newsBackground)
+        colors = CardDefaults.cardColors(
+            containerColor = if (!isSystemInDarkTheme()) CardBackgroundLight else CardBackgroundDark
+        )
     ) {
 
         Column(modifier = Modifier.padding(vertical = 8.dp)) {
@@ -92,7 +98,7 @@ fun ItemNews(news: News) {
                 Icon(
                     Icons.Filled.MoreVert,
                     contentDescription = "Up Down",
-                    tint = Color.Black,
+                    tint = if (!isSystemInDarkTheme()) Color.Black else Color.White,
                     modifier = Modifier.rotate(90f)
                 )
             }
@@ -102,7 +108,7 @@ fun ItemNews(news: News) {
 }
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun PreviewItemStock() {
     ItemNews(

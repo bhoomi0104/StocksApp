@@ -48,7 +48,7 @@ fun AddStockScreen(onStockAdded: (Stock) -> Unit) {
                 imeAction = ImeAction.Next
             ),
 
-        )
+            )
 
         TextField(
             value = fullName,
@@ -70,7 +70,7 @@ fun AddStockScreen(onStockAdded: (Stock) -> Unit) {
                 .padding(8.dp),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.None,
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Decimal,
                 imeAction = ImeAction.Next
             ),
             placeholder = { Text("Value") }
@@ -85,7 +85,7 @@ fun AddStockScreen(onStockAdded: (Stock) -> Unit) {
             placeholder = { Text("Change") },
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.None,
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Decimal,
                 imeAction = ImeAction.Done
             ),
 
